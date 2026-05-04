@@ -6,7 +6,8 @@ description: >
   owns the coordination layer: routing incoming work, aggregating status,
   and surfacing cross-cutting decisions. Nestor handles upfront planning
   and milestone tracking. Sage runs automation and tool-chaining. Argus
-  covers research. Prism handles data analysis. Janus observes signals
+  covers research. Prism handles data analysis. Arachne weaves all
+  sub-results into a single coherent output. Janus observes signals
   and keeps the progress picture current.
 category: general
 featured: true
@@ -31,6 +32,10 @@ members:
   - persona_id: prism
     role: member
     name_suffix: "· Analysis"
+
+  - persona_id: arachne
+    role: member
+    name_suffix: "· Synthesis"
 
   - persona_id: janus
     role: observer
