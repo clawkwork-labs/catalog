@@ -38,6 +38,14 @@
           "name_suffix": {
             "type": "string",
             "description": "Optional suffix appended to the persona's display name when spawned."
+          },
+          "system_prompt": {
+            "type": "string",
+            "description": "Replaces the persona's system_prompt entirely when this agent is spawned as part of this team. Use sparingly — prefer system_prompt_append."
+          },
+          "system_prompt_append": {
+            "type": "string",
+            "description": "Appended to the persona's system_prompt (with a blank line separator) when this agent is spawned as part of this team. Keeps the base persona intact while adding team-specific context."
           }
         }
       }

@@ -26,6 +26,13 @@ export interface TeamMemberYaml {
   /** Optional suffix appended to the persona's display name when the team
    *  spawns the agent (e.g. " · Applications"). */
   name_suffix?: string;
+  /** Replaces the persona's system_prompt entirely when spawned in this team.
+   *  Use sparingly — prefer system_prompt_append. */
+  system_prompt?: string;
+  /** Appended to the persona's system_prompt (blank line separator) when
+   *  spawned in this team. Keeps the base persona intact while layering in
+   *  team-specific context, upstream/downstream wiring, and output formats. */
+  system_prompt_append?: string;
 }
 
 export interface TeamYaml {
