@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clawwork.dev/persona.schema.json",
+  "title": "Persona",
+  "description": "A ClawWork persona definition. Compiled to TS by tools/build.ts.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "title",
+    "description",
+    "category",
+    "kind",
+    "featured",
+    "model_tier",
+    "system_prompt"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "description": "Stable kebab/snake-case id. Must match the directory name."
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "category": {
+      "type": "string",
+      "enum": [
+        "engineering",
+        "design-product",
+        "research-data",
+        "communication",
+        "ops-reliability",
+        "personal",
+        "general",
+        "gstack"
+      ]
+    },
+    "kind": { "type": "string", "enum": ["generalist", "specialist"] },
+    "featured": { "type": "boolean" },
+    "model_tier": { "type": "string", "enum": ["advanced", "standard", "basic"] },
+    "system_prompt": { "type": "string", "minLength": 1 },
+    "config": {
+      "type": "object",
+      "description": "Partial<AgentConfig> overrides. Only set fields that differ from defaults.",
+      "additionalProperties": true
+    },
+    "extra_index_imports": {
+      "type": "array",
+      "description": "Side-effect import paths added to the top of the generated index.ts (only valid for bundled personas — those with a files/ tree). Use to wire hand-written sibling modules like ./tools that register persona-specific tools into the global registry.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "seed": {
+      "type": "object",
+      "description": "Optional seed content beyond the files/ tree: hooks, standing orders, and files inherited from another persona's files/ tree. The build emits a per-persona seeder into seeders.ts that calls the matching preset helper for each block.",
+      "additionalProperties": false,
+      "properties": {
+        "hooks": {
+          "type": "array",
+          "description": "Preset tool hooks seeded into the agent's tool_hooks table.",
+          "items": {
+            "type": "object",
+            "required": ["name", "timing", "tool_pattern", "action"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "timing": { "type": "string", "enum": ["before", "after"] },
+              "tool_pattern": { "type": "string", "minLength": 1 },
+              "action": { "type": "string", "enum": ["log", "block", "modify_args", "notify"] },
+              "config": { "type": "object", "additionalProperties": true },
+              "enabled": { "type": "boolean" }
+            }
+          }
+        },
+        "orders": {
+          "type": "array",
+          "description": "Preset standing orders seeded as /orders/<slug>.md files plus matching cron jobs.",
+          "items": {
+            "type": "object",
+            "required": ["name", "schedule", "instruction"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "schedule": { "type": "string", "minLength": 1 },
+              "instruction": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "inherit_files": {
+          "type": "array",
+          "description": "Subsets of another persona's files/ tree mounted into this persona's VFS. Each entry references a source persona by id; the source must define a files/ tree.",
+          "items": {
+            "type": "object",
+            "required": ["from", "paths"],
+            "additionalProperties": false,
+            "properties": {
+              "from": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*$",
+                "description": "Source persona id (must be a persona with a files/ tree)."
+              },
+              "paths": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "pattern": "^/" },
+                "description": "VFS paths to inherit (must exist in source's emitted FILE_SPECS). Each starts with /."
+              },
+              "flag": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Idempotency flag key. Defaults to <id>_<from>_files_seeded."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clawwork.dev/team.schema.json",
+  "title": "Team",
+  "description": "A ClawWork team-persona template. Compiled to TS by tools/build.ts. Shared markdown skills are NOT listed here — they're discovered from the sibling files/ tree.",
+  "type": "object",
+  "required": ["id", "name", "description", "category", "featured", "members"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "description": "Stable kebab/snake-case id. Must match the directory name."
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "category": {
+      "type": "string",
+      "enum": ["engineering", "ops", "research", "education", "general"]
+    },
+    "featured": { "type": "boolean" },
+    "members": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["persona_id", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "persona_id": {
+            "type": "string",
+            "description": "Id of an existing persona under catalog/personas/."
+          },
+          "role": {
+            "type": "string",
+            "enum": ["owner", "admin", "member", "observer"]
+          },
+          "name_suffix": {
+            "type": "string",
+            "description": "Optional suffix appended to the persona's display name when spawned."
+          }
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "description": "Partial<TeamConfig> overrides — only fields that differ from defaults.",
+      "additionalProperties": true
+    }
+  }
+}

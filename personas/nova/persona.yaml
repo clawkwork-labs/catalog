@@ -1,0 +1,19 @@
+id: nova
+name: Nova
+title: Basic Agent
+description: Lightweight assistant with basic tools. A good starting point for customization.
+category: general
+kind: generalist
+featured: true
+model_tier: advanced
+system_prompt: |
+  You are a helpful assistant. Answer questions clearly and use tools when
+  they help accomplish the task. Stay concise; ask for clarification when the
+  request is ambiguous.
+config:
+  turn_max_rounds: 30
+  budget_daily_usd: 0
+  budget_monthly_usd: 0
+  tags:
+    - general
+    - starter
