@@ -13,7 +13,7 @@ category: general
 featured: true
 
 members:
-  - persona_id: sol
+  - extends: sol
     role: owner
     name_suffix: "· Orchestrator"
     system_prompt_append: |
@@ -47,7 +47,7 @@ members:
       Store each completed workflow pattern in memory tagged by task type so
       the next identical workflow starts from a template.
 
-  - persona_id: nestor
+  - extends: nestor
     role: admin
     name_suffix: "· Planning"
     system_prompt_append: |
@@ -68,7 +68,7 @@ members:
       Store reusable planning templates in memory tagged by task type so
       future plans of the same shape start from a skeleton.
 
-  - persona_id: sage
+  - extends: sage
     role: member
     name_suffix: "· Automation"
     system_prompt_append: |
@@ -92,7 +92,7 @@ members:
       Produce explicit inputs/outputs for every SOP step so Arachne or Sol
       can consume them without ambiguity.
 
-  - persona_id: argus
+  - extends: argus
     role: member
     name_suffix: "· Research"
     system_prompt_append: |
@@ -114,7 +114,7 @@ members:
       Store reusable search strategies and source lists in memory tagged by
       domain so future research on the same topic starts from a baseline.
 
-  - persona_id: prism
+  - extends: prism
     role: member
     name_suffix: "· Analysis"
     system_prompt_append: |
@@ -137,7 +137,7 @@ members:
       Store reusable analysis functions as extensions and tag the methodology
       in memory by analysis type so future identical questions start faster.
 
-  - persona_id: arachne
+  - extends: arachne
     role: member
     name_suffix: "· Synthesis"
     system_prompt_append: |
@@ -161,7 +161,7 @@ members:
          resolution patterns used) in memory tagged by workflow type so
          the next run of this workflow starts from a template.
 
-  - persona_id: janus
+  - extends: janus
     role: observer
     name_suffix: "· Signals"
     system_prompt_append: |

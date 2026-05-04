@@ -23,37 +23,89 @@
       "type": "array",
       "minItems": 1,
       "items": {
-        "type": "object",
-        "required": ["persona_id", "role"],
-        "additionalProperties": false,
-        "properties": {
-          "persona_id": {
-            "type": "string",
-            "description": "Id of an existing persona under catalog/personas/."
-          },
-          "role": {
-            "type": "string",
-            "enum": ["owner", "admin", "member", "observer"]
-          },
-          "name_suffix": {
-            "type": "string",
-            "description": "Optional suffix appended to the persona's display name when spawned."
-          },
-          "system_prompt": {
-            "type": "string",
-            "description": "Replaces the persona's system_prompt entirely when this agent is spawned as part of this team. Use sparingly — prefer system_prompt_append."
-          },
-          "system_prompt_append": {
-            "type": "string",
-            "description": "Appended to the persona's system_prompt (with a blank line separator) when this agent is spawned as part of this team. Keeps the base persona intact while adding team-specific context."
-          }
-        }
+        "oneOf": [
+          { "$ref": "#/$defs/inlineMember" },
+          { "$ref": "#/$defs/extendsMember" }
+        ]
       }
     },
     "config": {
       "type": "object",
       "description": "Partial<TeamConfig> overrides — only fields that differ from defaults.",
       "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "memberRole": {
+      "type": "string",
+      "enum": ["owner", "admin", "member", "observer"]
+    },
+    "memberConfig": {
+      "type": "object",
+      "description": "Partial<AgentConfig> overrides applied when this member is spawned.",
+      "additionalProperties": true
+    },
+    "inlineMember": {
+      "description": "A team member defined entirely within the team — no existing persona required.",
+      "type": "object",
+      "required": ["id", "name", "title", "description", "model_tier", "system_prompt", "role"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "description": "Stable id for this member, scoped to the team. Used as the agent id when spawned."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "model_tier": {
+          "type": "string",
+          "enum": ["advanced", "standard", "basic"]
+        },
+        "system_prompt": { "type": "string", "minLength": 1 },
+        "role": { "$ref": "#/$defs/memberRole" },
+        "config": { "$ref": "#/$defs/memberConfig" }
+      }
+    },
+    "extendsMember": {
+      "description": "A team member that extends an existing catalog persona, optionally overriding or appending to its fields.",
+      "type": "object",
+      "required": ["extends", "role"],
+      "additionalProperties": false,
+      "properties": {
+        "extends": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "description": "Id of an existing persona under catalog/personas/. The member inherits all fields from that persona."
+        },
+        "role": { "$ref": "#/$defs/memberRole" },
+        "name": {
+          "type": "string",
+          "description": "Overrides the persona's display name when spawned in this team."
+        },
+        "name_suffix": {
+          "type": "string",
+          "description": "Suffix appended to the persona's display name when spawned (e.g. '· Research'). Ignored if name is set."
+        },
+        "title": {
+          "type": "string",
+          "description": "Overrides the persona's title when spawned in this team."
+        },
+        "description": {
+          "type": "string",
+          "description": "Overrides the persona's description when spawned in this team."
+        },
+        "system_prompt": {
+          "type": "string",
+          "description": "Replaces the persona's system_prompt entirely when spawned in this team. Use sparingly — prefer system_prompt_append."
+        },
+        "system_prompt_append": {
+          "type": "string",
+          "description": "Appended to the persona's system_prompt (blank line separator) when spawned in this team. Keeps the base persona intact while adding team-specific context."
+        },
+        "config": { "$ref": "#/$defs/memberConfig" }
+      }
     }
   }
 }
