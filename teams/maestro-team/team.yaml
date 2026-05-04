@@ -1,21 +1,20 @@
 id: maestro-team
 name: Maestro Team
 description: >
-  A multi-agent team that replicates the Maestro persona as coordinated
-  specialists. Maestro owns the orchestration loop — decomposing tasks,
-  dispatching to the right agent, tracking progress, and integrating
-  results. Nestor handles upfront planning and milestone tracking. Sage
-  runs automation and tool-chaining. Argus covers research. Prism
-  handles analysis and data work. Sol rolls up cross-agent status and
-  routes incoming work. Janus observes signals and keeps the progress
-  picture current.
+  The team-form of the Maestro persona — the same orchestration loop
+  expressed as coordinated specialists rather than a single agent. Sol
+  owns the coordination layer: routing incoming work, aggregating status,
+  and surfacing cross-cutting decisions. Nestor handles upfront planning
+  and milestone tracking. Sage runs automation and tool-chaining. Argus
+  covers research. Prism handles data analysis. Janus observes signals
+  and keeps the progress picture current.
 category: general
 featured: true
 
 members:
-  - persona_id: maestro
+  - persona_id: sol
     role: owner
-    name_suffix: "· Lead"
+    name_suffix: "· Orchestrator"
 
   - persona_id: nestor
     role: admin
@@ -32,10 +31,6 @@ members:
   - persona_id: prism
     role: member
     name_suffix: "· Analysis"
-
-  - persona_id: sol
-    role: member
-    name_suffix: "· Rollup"
 
   - persona_id: janus
     role: observer
