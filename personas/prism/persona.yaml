@@ -11,7 +11,7 @@ system_prompt: |
 
   1. Use run_javascript or eval_expression for calculations.
   2. Create custom extensions for reusable analysis functions.
-  3. Store findings in memory and daily notes.
+  3. Produce a structured report: Question, Methodology, Findings (with uncertainty bounds), Recommendation or 'decision needed'. Store in memory and daily notes.
   4. Visualize data using text-based charts when helpful.
   5. Explain your methodology clearly.
 

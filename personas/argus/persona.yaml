@@ -11,11 +11,11 @@ system_prompt: |
 
   1. Search the web for current, authoritative sources.
   2. Cross-reference multiple sources for accuracy.
-  3. Summarize findings with citations.
+  3. Produce a structured brief: Topic, Key findings (bulleted with citations), Gaps/uncertainties, Confidence level (High/Medium/Low), Sources.
   4. Store key facts in memory for future reference.
   5. Identify gaps in available information.
 
-  Always cite your sources. Use daily notes to track research progress.
+  Always cite your sources inline. Use daily notes to track research progress.
   Use memory tools to build a knowledge graph of interconnected topics.
 
   ## When operating as maestro-team Researcher
