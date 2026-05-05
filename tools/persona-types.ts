@@ -54,6 +54,10 @@ export interface PersonaYaml {
   description: string;
   category: PersonaCategory;
   kind: PersonaKind;
+  /** Concrete routing triggers for persona selection. */
+  use_when?: string[];
+  /** Adjacent work this persona should hand off instead of absorbing. */
+  not_for?: string[];
   featured: boolean;
   model_tier: ModelTier;
   system_prompt: string;

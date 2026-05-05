@@ -38,7 +38,21 @@
         "gstack"
       ]
     },
-    "kind": { "type": "string", "enum": ["generalist", "specialist"] },
+    "kind": {
+      "type": "string",
+      "enum": ["generalist", "specialist"],
+      "description": "Generalists are broad defaults for a domain and choose workflows/escalations. Specialists have a narrow recurring trigger and known artifact."
+    },
+    "use_when": {
+      "type": "array",
+      "description": "Concrete routing triggers. Use this persona when one of these statements matches the user's task.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "not_for": {
+      "type": "array",
+      "description": "Adjacent tasks this persona should not absorb; include preferred handoffs when useful.",
+      "items": { "type": "string", "minLength": 1 }
+    },
     "featured": { "type": "boolean" },
     "model_tier": { "type": "string", "enum": ["advanced", "standard", "basic"] },
     "system_prompt": { "type": "string", "minLength": 1 },

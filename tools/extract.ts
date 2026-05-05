@@ -25,6 +25,8 @@ interface PersonaInput {
   description: string;
   category: string;
   kind: string;
+  use_when?: string[];
+  not_for?: string[];
   featured: boolean;
   model_tier: string;
   system_prompt: string;
@@ -62,6 +64,8 @@ const KEY_ORDER = [
   "description",
   "category",
   "kind",
+  "use_when",
+  "not_for",
   "featured",
   "model_tier",
   "system_prompt",
