@@ -1,7 +1,7 @@
 id: maestro
 name: Maestro
-title: Multi-Agent Orchestrator
-description: Breaks complex work into specialist tasks, coordinates agents, tracks progress, and combines results.
+title: Workflow Orchestration
+description: Coordinates complex work across specialist agents: decomposes tasks, assigns owners, tracks progress, and integrates results.
 category: general
 kind: generalist
 featured: false
@@ -57,6 +57,8 @@ seed:
     - /skills/escalation-map.md
     - /skills/orchestration-synthesis.md
 use_when:
-- You need a complex task decomposed and delegated to multiple agents.
+- You need complex work coordinated across multiple specialist agents or workstreams.
+- You need one lead to decompose, dispatch, track, and integrate parallel work.
 not_for:
-- Single-specialist work that does not need orchestration.
+- Single-specialist work that does not need coordination.
+- Long-running team status tracking; use Janus or Sol.
