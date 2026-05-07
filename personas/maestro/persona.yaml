@@ -1,7 +1,7 @@
 id: maestro
 name: Maestro
 title: Workflow Orchestration
-description: Coordinates complex work across specialist agents: decomposes tasks, assigns owners, tracks progress, and integrates results.
+description: "Coordinates complex work across specialist agents: decomposes tasks, assigns owners, tracks progress, and integrates results."
 category: general
 kind: generalist
 featured: false
@@ -40,25 +40,25 @@ config:
   budget_daily_usd: 15
   context_max_tokens: 100000
   tags:
-  - orchestration
-  - multi-agent
+    - orchestration
+    - multi-agent
 seed:
   inherit_files:
-  - from: magnus
-    flag: maestro_shared_skills_seeded
-    paths:
-    - /skills/dispatch-manifest.md
-    - /skills/intake.md
-    - /skills/output-contract.md
-    - /skills/source-confidence.md
-    - /skills/factuality-check.md
-    - /skills/risk-register.md
-    - /skills/approval-gates.md
-    - /skills/escalation-map.md
-    - /skills/orchestration-synthesis.md
+    - from: magnus
+      flag: maestro_shared_skills_seeded
+      paths:
+        - /skills/dispatch-manifest.md
+        - /skills/intake.md
+        - /skills/output-contract.md
+        - /skills/source-confidence.md
+        - /skills/factuality-check.md
+        - /skills/risk-register.md
+        - /skills/approval-gates.md
+        - /skills/escalation-map.md
+        - /skills/orchestration-synthesis.md
 use_when:
-- You need complex work coordinated across multiple specialist agents or workstreams.
-- You need one lead to decompose, dispatch, track, and integrate parallel work.
+  - You need complex work coordinated across multiple specialist agents or workstreams.
+  - You need one lead to decompose, dispatch, track, and integrate parallel work.
 not_for:
-- Single-specialist work that does not need coordination.
-- Long-running team status tracking; use Janus or Sol.
+  - Single-specialist work that does not need coordination.
+  - Long-running team status tracking; use Janus or Sol.

@@ -28,6 +28,7 @@ import { dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as yamlParse } from "yaml";
 import type { PersonaBundle, PersonaYaml, SeedFile } from "./persona-types.ts";
+import type { TeamBundle, TeamSeedFile, TeamYaml } from "./team-types.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const CATALOG_DIR = resolve(__dirname, "..");
@@ -37,10 +38,16 @@ const REPO_ROOT = resolve(CATALOG_DIR, "..");
 const TARGET_DIR = process.env.PERSONAS_TARGET_DIR
   ? resolve(process.env.PERSONAS_TARGET_DIR)
   : resolve(REPO_ROOT, "src/defaults/personas");
+const TEAMS_TARGET_DIR = process.env.TEAMS_TARGET_DIR
+  ? resolve(process.env.TEAMS_TARGET_DIR)
+  : resolve(REPO_ROOT, "src/defaults/agent-team-personas");
 
 const GENERATED_BANNER =
   "// @generated -- DO NOT EDIT BY HAND.\n" +
   "// Source: catalog/personas/<id>/persona.yaml -- regenerate with `pnpm --dir catalog build`.";
+const GENERATED_TEAM_BANNER =
+  "// @generated -- DO NOT EDIT BY HAND.\n" +
+  "// Source: catalog/teams/<id>/team.yaml -- regenerate with `pnpm --dir catalog build`.";
 
 const MIME_BY_EXT: Record<string, string> = {
   ".md": "text/markdown",
@@ -77,6 +84,14 @@ function walkFiles(root: string): string[] {
   return out.sort();
 }
 
+function listTeamDirs(): string[] {
+  if (!existsSync(TEAMS_DIR)) return [];
+  return readdirSync(TEAMS_DIR, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && d.name !== "tools" && d.name !== "node_modules")
+    .map((d) => d.name)
+    .sort();
+}
+
 function loadBundle(id: string): PersonaBundle {
   const dir = join(PERSONAS_DIR, id);
   const yamlPath = join(dir, "persona.yaml");
@@ -89,6 +104,32 @@ function loadBundle(id: string): PersonaBundle {
   }
   const filesDir = join(dir, "files");
   const files: SeedFile[] = [];
+  if (existsSync(filesDir) && statSync(filesDir).isDirectory()) {
+    for (const abs of walkFiles(filesDir)) {
+      const rel = relative(filesDir, abs);
+      files.push({
+        rel,
+        abs,
+        content: readFileSync(abs, "utf8"),
+        mime: MIME_BY_EXT[extname(abs).toLowerCase()] ?? "application/octet-stream",
+      });
+    }
+  }
+  return { yaml, dir, files };
+}
+
+function loadTeamBundle(id: string): TeamBundle {
+  const dir = join(TEAMS_DIR, id);
+  const yamlPath = join(dir, "team.yaml");
+  if (!existsSync(yamlPath)) {
+    throw new Error(`Missing ${relative(REPO_ROOT, yamlPath)}`);
+  }
+  const yaml = yamlParse(readFileSync(yamlPath, "utf8")) as TeamYaml;
+  if (yaml.id !== id) {
+    throw new Error(`Team id mismatch: dir "${id}" but team.yaml says "${yaml.id}"`);
+  }
+  const filesDir = join(dir, "files");
+  const files: TeamSeedFile[] = [];
   if (existsSync(filesDir) && statSync(filesDir).isDirectory()) {
     for (const abs of walkFiles(filesDir)) {
       const rel = relative(filesDir, abs);
@@ -182,6 +223,48 @@ function personaObjectLiteral(yaml: PersonaYaml): string {
   if (yaml.config && Object.keys(yaml.config).length > 0) {
     fields.config = yaml.config;
   }
+  return renderObject(fields, 0);
+}
+
+function teamMemberObjectLiteral(member: TeamYaml["members"][number]): Record<string, unknown> {
+  if ("extends" in member) {
+    return {
+      persona_id: member.extends,
+      role: member.role,
+      ...(member.name ? { name: member.name } : {}),
+      ...(member.name_suffix ? { name_suffix: member.name_suffix } : {}),
+      ...(member.description ? { responsibility: member.description } : {}),
+      ...(member.title ? { note: member.title } : {}),
+      ...(member.system_prompt_append ? { system_prompt_append: member.system_prompt_append } : {}),
+      ...(member.config && Object.keys(member.config).length > 0 ? { config: member.config } : {}),
+    };
+  }
+  return {
+    key: member.id,
+    persona_id: member.id,
+    role: member.role,
+    name: member.name,
+    responsibility: member.description,
+    note: member.title,
+    system_prompt_append: member.system_prompt,
+    ...(member.config && Object.keys(member.config).length > 0 ? { config: member.config } : {}),
+  };
+}
+
+function teamObjectLiteral(bundle: TeamBundle): string {
+  const fields: Record<string, unknown> = {
+    id: bundle.yaml.id,
+    name: bundle.yaml.name,
+    description: bundle.yaml.description,
+    category: bundle.yaml.category,
+    featured: bundle.yaml.featured,
+    members: bundle.yaml.members.map(teamMemberObjectLiteral),
+    shared_skills: bundle.files.map((f) => ({
+      path: f.rel,
+      content: f.content,
+    })),
+    config: bundle.yaml.config ?? {},
+  };
   return renderObject(fields, 0);
 }
 
@@ -458,6 +541,63 @@ function inheritedConstName(personaId: string, from: string): string {
   return `${personaId.toUpperCase()}_${from.toUpperCase()}_INHERITED_PATHS`;
 }
 
+function emitTeam(bundle: TeamBundle): string {
+  const id = bundle.yaml.id;
+  const varName = camelIdentifier(id);
+  return (
+    `${GENERATED_TEAM_BANNER}
+` +
+    `import type { TeamPersona } from "../types";
+
+` +
+    `const ${varName}: TeamPersona = ${teamObjectLiteral(bundle)};
+
+` +
+    `export default ${varName};
+`
+  );
+}
+
+function emitTeamsIndex(bundles: TeamBundle[]): string {
+  const imports = bundles
+    .map((b) => `import ${camelIdentifier(b.yaml.id)} from "./${b.yaml.id}";`)
+    .join("\n");
+  const arr = bundles.map((b) => camelIdentifier(b.yaml.id)).join(", ");
+  return (
+    `${GENERATED_TEAM_BANNER}
+` +
+    `import type { TeamPersona } from "./types";
+` +
+    (imports ? `${imports}\n` : "") +
+    `\n` +
+    `export const TEAM_PERSONAS: TeamPersona[] = [${arr}];
+
+` +
+    `export function getTeamTemplate(id: string | null | undefined): TeamPersona | undefined {
+` +
+    `  if (!id) return undefined;
+` +
+    `  return TEAM_PERSONAS.find((t) => t.id === id);
+` +
+    `}
+
+` +
+    `export function listTeamTemplates(): TeamPersona[] {
+` +
+    `  return TEAM_PERSONAS;
+` +
+    `}
+
+` +
+    `export type { TeamPersona } from "./types";
+`
+  );
+}
+
+function camelIdentifier(id: string): string {
+  return id.replace(/[-_]+([a-zA-Z0-9])/g, (_, c: string) => c.toUpperCase());
+}
+
 function emitSeeders(bundles: PersonaBundle[]): string {
   const seeded = bundles.filter(personaNeedsSeeder);
 
@@ -642,7 +782,22 @@ function main() {
     `Built ${bundles.length} personas -> ${written} TS files in ${relative(REPO_ROOT, TARGET_DIR)}`
   );
 
-  reportTeamsStub();
+  const teamBundles = listTeamDirs().map(loadTeamBundle);
+  let teamsWritten = 0;
+  for (const b of teamBundles) {
+    safeWrite(join(TEAMS_TARGET_DIR, b.yaml.id, "index.ts"), emitTeam(b));
+    teamsWritten++;
+  }
+  if (teamBundles.length > 0) {
+    safeWrite(join(TEAMS_TARGET_DIR, "index.ts"), emitTeamsIndex(teamBundles));
+    teamsWritten++;
+  }
+  console.log(
+    `Built ${teamBundles.length} teams -> ${teamsWritten} TS files in ${relative(
+      REPO_ROOT,
+      TEAMS_TARGET_DIR
+    )}`
+  );
 }
 
 /**
