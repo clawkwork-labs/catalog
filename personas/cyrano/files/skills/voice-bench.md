@@ -16,8 +16,9 @@ For each row, score 0–2 against your draft (with the profile open):
 
 | # | Check |
 |---|---|
-| 1 | **Cadence.** Sentence-length distribution roughly matches the profile? |
-| 2 | **Cadence.** Paragraph-length distribution roughly matches? |
+| 1 | **Cadence — sentence length.** Average sentence length roughly matches the profile? |
+| 2 | **Cadence — burstiness.** Sentence-length *variance* matches? (Real signal: do short and long sentences alternate the way the author does, or is the draft stuck in a medium-length band? This is the highest-leverage row — AI detectors weight it heavily.) |
+| 2b | **Cadence — paragraph length.** Paragraph-length distribution roughly matches? |
 | 3 | **Diction — words used.** Did I reach for at least 2–3 of the author's signature words/phrases naturally? |
 | 4 | **Diction — words avoided.** Zero hits on the author's never-words list? Zero hits on the AI vocabulary list (delve/leverage/navigate/etc.)? |
 | 5 | **Contractions.** Match the author's habit (always / never / mixed-when)? |
@@ -33,13 +34,15 @@ For each row, score 0–2 against your draft (with the profile open):
 
 ## Threshold
 
-- **Total ≥ 24/28** AND **no row scoring 0** → ship.
+The bench has 15 rows, max score 30.
+
+- **Total ≥ 26/30** AND **no row scoring 0** → ship.
 - **Any row scoring 0** → revise that row, don't ship. A single
   hard fail (e.g. "leverage" appears in the draft, the author's
   never-words list says "leverage") sinks the piece — strip it.
-- **Total 20–23 with no zeros** → revise; the draft is competent
+- **Total 22–25 with no zeros** → revise; the draft is competent
   but doesn't yet *sound like the author*.
-- **Total < 20** → start over from the voice profile. Either you
+- **Total < 22** → start over from the voice profile. Either you
   drifted into generic mode or the profile is too thin.
 
 ## Common revision moves when the bench fails

@@ -68,10 +68,21 @@ Common pushback and how to handle:
   be generic-good, not you-good, and we'll spend more rounds
   fixing voice than it'd take you to paste two posts." Then
   hold.
-- **"I don't have anything written."** — Then have them write
-  ~200 words off the cuff on any topic, in chat, as a
-  voice-capture exercise. Not great, but better than zero.
-  Flag in the profile that the sample base is thin.
+- **"I don't have anything written."** — Two fallbacks, in order:
+  1. **Free-write.** Have them type ~200 words off the cuff on any
+     topic in chat. Tell them not to edit. Speed-typed prose is closer
+     to their real voice than anything they'd polish.
+  2. **Talk it out.** Ask one open-ended, sensory question — "Walk me
+     through the moment you decided to start the company," "What's
+     the most frustrating thing about your industry right now" — and
+     have them voice-dictate or type the reply unfiltered. Speech
+     transcripts are voice-rich but punctuation-poor; flag in the
+     profile that punctuation habits are inferred not observed.
+
+  Either fallback leaves the sample base thin — note it explicitly in
+  the profile's Snapshot ("profile built from one ~200-word free-write,
+  treat all conclusions as tentative") and request more written samples
+  after the first delivery.
 - **"I'll just send one thing."** — Take it, build a partial
   profile, deliver a draft with explicit caveats: "based on
   one sample I'm guessing X about your voice — flag if I'm

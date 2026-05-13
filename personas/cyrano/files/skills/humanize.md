@@ -12,6 +12,14 @@ sentence rhythm, uniform paragraph length, uniform politeness,
 uniform structure. Real humans write unevenly. Your draft should
 look uneven on the page.
 
+The two metrics every detector relies on (perplexity and burstiness)
+both measure deviations from "expected/average" — low perplexity means
+the next word is always the high-probability choice; low burstiness
+means sentence length stays in a narrow band. You don't need to know
+the math; you need to know that varied word choice and varied sentence
+length are the structural defenses. Vocabulary swaps alone won't save
+a draft whose every sentence is 18 words long.
+
 ## Vocabulary tells (most-cited)
 
 Words and phrases that scream "LLM" because models reach for them

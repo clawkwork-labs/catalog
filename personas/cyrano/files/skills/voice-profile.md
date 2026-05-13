@@ -21,9 +21,21 @@ way they talk — short sentences, occasional swears, drops articles
 
 ## Cadence
 - Sentence length: avg ~N words, range A–B. Mix: <ratio of short to long>.
+- **Burstiness** — how much sentence length varies from one sentence to
+  the next. This is the single highest-signal cadence feature; AI prose
+  clusters in a narrow band of medium-length sentences, humans swing
+  between terse and sprawling. Note their pattern: do short sentences
+  cluster (e.g. three one-liners in a row at climax) or scatter? Do
+  long sentences chain (semicolons, embedded clauses) or stand alone?
 - Paragraph length: typically N–M sentences. One-liners common? rare?
 - Rhythm tics: starts with conjunctions? sentence fragments? semicolons
   rare or common? em-dash, en-dash, parens — which do they reach for?
+- **Function-word habits** — note any noticeable preferences in the
+  small connectives ("but" vs "however", "so" vs "therefore", "and"
+  starting sentences, "anyway", "honestly", "look,"). These are the
+  most stable per-person signals in stylometry — easy to underweight
+  because they feel invisible, but they're the difference between
+  "sounds like them" and "sounds like a careful imitator."
 
 ## Diction
 - Register: casual / neutral / formal / mixed how

@@ -209,6 +209,7 @@ function personaObjectLiteral(yaml: PersonaYaml): string {
   // Drop empty config to match the existing TS output where personas omit it.
   const fields: Record<string, unknown> = {
     id: yaml.id,
+    version: yaml.version ?? 0,
     name: yaml.name,
     title: yaml.title,
     description: yaml.description,
@@ -620,10 +621,6 @@ function emitSeeders(bundles: PersonaBundle[]): string {
   //    (seed function, plus FILE_SPECS if anyone inherits from it).
   // 2. Generic preset helpers for whichever rich seed blocks appear.
   const filesPersonas = bundles.filter((b) => b.files.length > 0);
-  const inheritedSources = new Set<string>();
-  for (const b of seeded) {
-    for (const inh of b.yaml.seed?.inherit_files ?? []) inheritedSources.add(inh.from);
-  }
 
   const filesImports = filesPersonas
     .map((b) => {
@@ -631,9 +628,7 @@ function emitSeeders(bundles: PersonaBundle[]): string {
       const cap = capitalize(id);
       const upper = id.toUpperCase();
       const seedFn = `seed${cap}Files`;
-      const wantsSpecs = inheritedSources.has(id);
-      // Only the seeder is needed if nobody inherits from this persona.
-      const named = wantsSpecs ? `${seedFn}, ${upper}_FILE_SPECS` : seedFn;
+      const named = `${seedFn}, ${upper}_FILE_SPECS`;
       return `import { ${named} } from "./${id}/files-seed";`;
     })
     .join("\n");
@@ -720,6 +715,28 @@ function emitSeeders(bundles: PersonaBundle[]): string {
     })
     .join("\n");
 
+  const fileSpecEntries = seeded
+    .map((b) => {
+      const id = b.yaml.id;
+      const seed = b.yaml.seed ?? {};
+      const specs: string[] = [];
+      if (b.files.length > 0) {
+        specs.push(
+          `    ...${id.toUpperCase()}_FILE_SPECS.map((s) => ({ ...s, source: "direct" as const })),`
+        );
+      }
+      for (const inh of seed.inherit_files ?? []) {
+        const constName = inheritedConstName(id, inh.from);
+        specs.push(
+          `    ...${inh.from.toUpperCase()}_FILE_SPECS.filter((s) => ${constName}.includes(s.path)).map((s) => ({ ...s, source: "inherited" as const })),`
+        );
+      }
+      if (specs.length === 0) return null;
+      return `  ${JSON.stringify(id)}: [\n${specs.join("\n")}\n  ],`;
+    })
+    .filter((s): s is string => !!s)
+    .join("\n");
+
   return (
     `${GENERATED_BANNER}\n` +
     `/**\n` +
@@ -731,6 +748,19 @@ function emitSeeders(bundles: PersonaBundle[]): string {
     (constBlocks.length > 0 ? constBlocks.join("\n\n") + "\n\n" : "") +
     `export type PersonaSeeder = (sql: SqlStorage) => void;\n\n` +
     `const SEEDERS: Record<string, PersonaSeeder> = {\n${entries}\n};\n\n` +
+    `export interface PersonaSeedFileSpec {\n` +
+    `  path: string;\n` +
+    `  content: string;\n` +
+    `  mime: string;\n` +
+    `  source: "direct" | "inherited";\n` +
+    `}\n\n` +
+    `const SEED_FILE_SPECS: Record<string, ReadonlyArray<PersonaSeedFileSpec>> = {\n${fileSpecEntries}\n};\n\n` +
+    `export function getPersonaSeedFileSpecs(\n` +
+    `  templateId: string | null | undefined\n` +
+    `): ReadonlyArray<PersonaSeedFileSpec> {\n` +
+    `  if (!templateId) return [];\n` +
+    `  return SEED_FILE_SPECS[templateId] ?? [];\n` +
+    `}\n\n` +
     `export function getPersonaSeeder(\n` +
     `  templateId: string | null | undefined\n` +
     `): PersonaSeeder | undefined {\n` +

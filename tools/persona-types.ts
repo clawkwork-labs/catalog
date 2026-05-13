@@ -49,6 +49,8 @@ export interface PersonaSeedYaml {
 
 export interface PersonaYaml {
   id: string;
+  /** Catalog content version. Missing legacy YAML is normalized to v0. */
+  version?: number;
   name: string;
   title: string;
   description: string;
