@@ -26,7 +26,7 @@ catalog/
 │       ├── persona.yaml            # the persona config
 │       └── files/                  # optional — VFS-seeded content
 │           ├── skills/<skill>.md
-│           └── site/index.html     # optional persona site override
+│           └── html/index.html     # optional persona HTML home override
 └── teams/
     ├── team.schema.json            # JSON-Schema for team.yaml
     └── <id>/                       # (none yet — see "Teams" below)
