@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-`catalog/` is the **source of truth** for everything ClawWork deploys from a template — personas now, teams soon. Each `<kind>/<id>/` is one definition. The folder is laid out so it can be lifted into its own repo later: it has its own `package.json` / `tsconfig.json` and depends on **nothing in `../src`**. Don't add cross-imports into the parent worker.
+`catalog/` is the **source of truth** for everything ClawkWork deploys from a template — personas now, teams soon. Each `<kind>/<id>/` is one definition. The folder is laid out so it can be lifted into its own repo later: it has its own `package.json` / `tsconfig.json` and depends on **nothing in `../src`**. Don't add cross-imports into the parent worker.
 
 ## Commands
 

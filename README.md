@@ -1,6 +1,6 @@
 # catalog
 
-Source-of-truth definitions for everything ClawWork can deploy from a
+Source-of-truth definitions for everything ClawkWork can deploy from a
 template: **personas** today, **teams** soon. Each subfolder is a kind;
 each `<kind>/<id>/` is one definition.
 
@@ -95,7 +95,7 @@ system_prompt: |
 config:
   approval_policy: auto
   turn_max_rounds: 25
-  budget_daily_usd: 10
+  budget_daily_tokens: 0
   tags: [engineering, build, github]
   tool_permissions:
     github: auto

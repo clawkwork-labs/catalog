@@ -74,7 +74,7 @@ system_prompt: |
   - Single-specialist work without coordination: route to the specialist; do not wrap it in ceremony.
 config:
   turn_max_rounds: 30
-  budget_daily_usd: 15
+  budget_daily_tokens: 0
   context_max_tokens: 100000
   tags:
     - orchestration

@@ -226,7 +226,7 @@ members:
 
 config:
   turn_max_rounds: 40
-  budget_daily_usd: 15
+  budget_daily_tokens: 0
   context_max_tokens: 150000
   tags:
     - recruiting

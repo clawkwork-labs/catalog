@@ -84,8 +84,8 @@ system_prompt: |
   - /skills/basic-agent-loop.md — the underlying loop you run by default.
 config:
   turn_max_rounds: 30
-  budget_daily_usd: 0
-  budget_monthly_usd: 0
+  budget_daily_tokens: 0
+  budget_monthly_tokens: 0
   tags:
   - general
   - starter
@@ -106,7 +106,7 @@ seed:
     - /skills/escalation-map.md
     - /skills/task-router.md
 use_when:
-- You're trying out ClawWork and want a friendly general-purpose default agent.
+- You're trying out ClawkWork and want a friendly general-purpose default agent.
 - You have an everyday question, quick lookup, short rewrite, or simple calculation.
 - You want a one-shot draft (a message, summary, checklist, or short plan) that doesn't need a specialist.
 - You're not sure which specialist persona to pick and want help being routed.

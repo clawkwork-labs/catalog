@@ -88,7 +88,7 @@ system_prompt: |
     architectural opinions — file them as observations and route on.
 config:
   turn_max_rounds: 30
-  budget_daily_usd: 8
+  budget_daily_tokens: 0
   tags:
   - engineering
   - qa

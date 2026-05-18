@@ -195,7 +195,7 @@ members:
 
 config:
   turn_max_rounds: 40
-  budget_daily_usd: 25
+  budget_daily_tokens: 0
   context_max_tokens: 200000
   tags:
     - orchestration

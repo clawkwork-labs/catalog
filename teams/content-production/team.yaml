@@ -296,7 +296,7 @@ members:
 
 config:
   turn_max_rounds: 30
-  budget_daily_usd: 12
+  budget_daily_tokens: 0
   context_max_tokens: 120000
   tags:
     - content

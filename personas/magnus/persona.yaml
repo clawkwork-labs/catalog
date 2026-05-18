@@ -74,7 +74,7 @@ config:
   approval_policy: auto
   tool_profile: full
   turn_max_rounds: 30
-  budget_daily_usd: 15
+  budget_daily_tokens: 0
   context_max_tokens: 120000
   tags:
   - engineering

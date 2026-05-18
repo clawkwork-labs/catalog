@@ -122,7 +122,7 @@ system_prompt: |
   - Hand off paid-search bidding, ad copy, and media buying to the relevant marketing/ads specialist.
 config:
   turn_max_rounds: 30
-  budget_daily_usd: 5
+  budget_daily_tokens: 0
   approval_policy: auto
   tags:
   - seo

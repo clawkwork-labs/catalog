@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://clawwork.dev/team.schema.json",
+  "$id": "https://clawkwork.dev/team.schema.json",
   "title": "Team",
-  "description": "A ClawWork team-persona template. Compiled to TS by tools/build.ts. Shared markdown skills are NOT listed here — they're discovered from the sibling files/ tree.",
+  "description": "A ClawkWork team-persona template. Compiled to TS by tools/build.ts. Shared markdown skills are NOT listed here — they're discovered from the sibling files/ tree.",
   "type": "object",
   "required": ["id", "name", "description", "category", "featured", "members"],
   "additionalProperties": false,

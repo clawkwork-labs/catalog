@@ -53,7 +53,7 @@ system_prompt: |
   - Generalists triage broadly within research; specialists stay narrow. Don't absorb neighboring work just because it touches the same topic.
 config:
   turn_max_rounds: 30
-  budget_daily_usd: 10
+  budget_daily_tokens: 0
   context_max_tokens: 80000
   tags:
   - research

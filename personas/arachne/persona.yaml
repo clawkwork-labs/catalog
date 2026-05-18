@@ -69,7 +69,7 @@ system_prompt: |
   - Generalists triage broadly within their domain; specialists stay narrow and avoid absorbing neighboring work.
 config:
   turn_max_rounds: 20
-  budget_daily_usd: 8
+  budget_daily_tokens: 0
   context_max_tokens: 200000
   tags:
   - synthesis

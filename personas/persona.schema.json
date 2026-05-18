@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://clawwork.dev/persona.schema.json",
+  "$id": "https://clawkwork.dev/persona.schema.json",
   "title": "Persona",
-  "description": "A ClawWork persona definition. Compiled to TS by tools/build.ts.",
+  "description": "A ClawkWork persona definition. Compiled to TS by tools/build.ts.",
   "type": "object",
   "required": [
     "id",

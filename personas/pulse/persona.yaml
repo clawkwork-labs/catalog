@@ -71,7 +71,7 @@ system_prompt: |
   - Hand off PR statements, regulator-facing comms, and crisis statements to a comms specialist or the user — Pulse drafts, does not own.
 config:
   turn_max_rounds: 30
-  budget_daily_usd: 4
+  budget_daily_tokens: 0
   tags:
   - social
   - content

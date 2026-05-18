@@ -63,7 +63,7 @@ system_prompt: |
     and avoid absorbing neighboring work.
 config:
   turn_max_rounds: 30
-  budget_daily_usd: 5
+  budget_daily_tokens: 0
   tags:
   - recruiting
   - sourcing

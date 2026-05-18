@@ -80,7 +80,7 @@ config:
   approval_policy: auto
   tool_profile: full
   turn_max_rounds: 30
-  budget_daily_usd: 10
+  budget_daily_tokens: 0
   tags:
   - engineering
   - release
