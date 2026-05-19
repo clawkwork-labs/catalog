@@ -19,7 +19,7 @@ export type TeamCategory =
 
 export type TeamMemberRole = "owner" | "admin" | "member" | "observer";
 
-export type ModelTier = "advanced" | "standard" | "basic";
+export type ModelTier = "fast" | "advanced" | "standard" | "basic";
 
 /**
  * A member defined entirely within the team YAML — no catalog persona

@@ -15,7 +15,7 @@ export type PersonaCategory =
   | "gstack";
 
 export type PersonaKind = "generalist" | "specialist";
-export type ModelTier = "advanced" | "standard" | "basic";
+export type ModelTier = "fast" | "advanced" | "standard" | "basic";
 
 export interface PersonaHookYaml {
   name: string;

@@ -59,7 +59,7 @@
       "items": { "type": "string", "minLength": 1 }
     },
     "featured": { "type": "boolean" },
-    "model_tier": { "type": "string", "enum": ["advanced", "standard", "basic"] },
+    "model_tier": { "type": "string", "enum": ["fast", "advanced", "standard", "basic"] },
     "system_prompt": { "type": "string", "minLength": 1 },
     "config": {
       "type": "object",

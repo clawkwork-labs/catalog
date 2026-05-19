@@ -61,7 +61,7 @@
         "description": { "type": "string", "minLength": 1 },
         "model_tier": {
           "type": "string",
-          "enum": ["advanced", "standard", "basic"]
+          "enum": ["fast", "advanced", "standard", "basic"]
         },
         "system_prompt": { "type": "string", "minLength": 1 },
         "role": { "$ref": "#/$defs/memberRole" },
